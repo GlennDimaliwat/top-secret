@@ -22,4 +22,16 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  # e.g. with email 'sue@spacex.com', will return 'spacex.com'
+  def domain
+    # email will equal sue@spacex.com
+    # => spacex.com
+    self.email.split('@').last
+  end
+
+  def company
+    Company.find_by(domain: self.domain)
+  end
+
 end

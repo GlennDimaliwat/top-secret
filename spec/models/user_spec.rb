@@ -20,5 +20,19 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  
+  it 'should extract out domain from email' do
+    user = User.new(email: 'sue@spacex.com', password: 'password')
+    expect(user.domain).to eq('spacex.com')
+
+    user = User.new(email: 'bob@apple.com', password: 'password')
+    expect(user.domain).to eq('apple.com')
+  end
+
+  it 'should extract out company from domain' do
+    user = User.new(email: 'sue@spacex.com', password: 'password')
+    company = user.company
+    expect(company.name).to eq('Space X')
+
+  end
 end
