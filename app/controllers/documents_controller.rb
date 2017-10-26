@@ -1,9 +1,35 @@
 class DocumentsController < ApplicationController
   def index
-    @documents = Document.all
+    if signed_in?
+      company = current_user.company
+      @documents = Document.where(company: company)
+    end
   end
 
   def show
     @document = Document.find(params[:id])
+    authorize @document
   end
+
+  def edit
+    @document = Document.find(params[:id])
+  end
+
+  def update
+    @document = Document.find(params[:id])
+
+    if @document.update(document_params)
+      # Success, get to #show page
+      redirect_to @document
+    else
+      # Error, render edit form again
+      render :edit
+    end
+  end
+
+  private
+    # What attributes we allow from forms
+    def document_params
+      params.require(:document).permit(:name, :content)
+    end
 end
