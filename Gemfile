@@ -36,6 +36,9 @@ gem 'jbuilder', '~> 2.5'
 # Devise
 gem 'devise'
 
+# Pundit
+gem "pundit"
+
 group :development, :test do
 
   # Rspec
