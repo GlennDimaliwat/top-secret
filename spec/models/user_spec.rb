@@ -31,8 +31,11 @@ RSpec.describe User, type: :model do
 
   it 'should extract out company from domain' do
     user = User.new(email: 'sue@spacex.com', password: 'password')
-    company = user.company
-    expect(company.name).to eq('Space X')
+    space_x = Company.create! name: 'Space X', domain: 'spacex.com'
+    expect(user.company.name).to eq('Space X')
 
+    user = User.new(email: 'bob@apple.com', password: 'password')
+    apple = Company.create! name: 'Apple', domain: 'apple.com'
+    expect(user.company.name).to eq('Apple')    
   end
 end
